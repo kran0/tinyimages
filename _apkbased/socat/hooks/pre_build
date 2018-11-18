@@ -2,7 +2,15 @@
 
 echo "------ HOOK START - $0 -------"
 
-m4 -I ../ Dockerfile.m4 > Dockerfile
+#m4 -I ../ Dockerfile.m4 > Dockerfile
+(
+ cat ../Dockerfile-apkbase.m4
+ echo '
+ENTRYPOINT [ "/usr/bin/socat" ]
+CMD [ "--help" ]
+'
+) > Dockerfile
+
 echo "socat" > PACKAGES
 
 echo "------ HOOK END - $0 -------"
