@@ -2,12 +2,7 @@
 
 echo "------ HOOK START - $0 -------"
 
-(
- cat ../Dockerfile
- echo ENTRYPOINT [ "/usr/bin/socat" ]
- echo CMD [ "--help" ]
-) > Dockerfile
-
-echo 'socat' > PACKAGES
+m4 -I ../ Dockerfile.m4 > Dockerfile
+echo "socat" > PACKAGES
 
 echo "------ HOOK END - $0 -------"
