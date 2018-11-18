@@ -8,7 +8,8 @@
 
 [ -z "$1" ]      && exit 0
 [ -z "$TARGET" ] && TARGET="/target"
-[ -d "$TARGET" ] && mkdir -p "$TARGET"
+#[ -d "$TARGET" ] && mkdir -p "$TARGET"
+mkdir -p "$TARGET"
 
 
 function getDependsOn {
