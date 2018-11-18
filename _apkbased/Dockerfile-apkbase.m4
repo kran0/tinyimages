@@ -8,4 +8,4 @@ RUN apk --update "${PACKAGES}"\
  && /apkextractor.sh "${PACKAGES}"
 
 FROM scratch
-COPY --from apkextractor /target /
+COPY --from=apkextractor /target /
