@@ -2,7 +2,7 @@
 
 echo "------ HOOK START - $* -------"
 
-BUILD_ARGS="--build-arg PACKAGES=\"$(cat PACKAGES && rm -f PACKAGES)\""
+BUILD_ARGS='--build-arg PACKAGES="socat so:libncursesw.so.6"'
 docker build $BUILD_ARGS -t $IMAGE_NAME .
 
 echo "------ HOOK END - $* -------"

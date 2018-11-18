@@ -16,6 +16,6 @@ CMD [ "--help" ]
 
 cat Dockerfile
 
-echo "socat so:libncursesw.so.6" > PACKAGES
+#echo "socat so:libncursesw.so.6" > PACKAGES
 
 echo "------ HOOK END - $0 -------"
