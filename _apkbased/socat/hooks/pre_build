@@ -14,6 +14,8 @@ CMD [ "--help" ]
 '
 ) > Dockerfile
 
+cat Dockerfile
+
 echo "socat" > PACKAGES
 
 echo "------ HOOK END - $0 -------"
