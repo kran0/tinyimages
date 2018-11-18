@@ -3,6 +3,9 @@
 echo "------ HOOK START - $0 -------"
 
 #m4 -I ../ Dockerfile.m4 > Dockerfile
+
+cp ../apkextractor.sh ./
+
 (
  cat ../Dockerfile-apkbase.m4
  echo '
