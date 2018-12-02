@@ -2,7 +2,11 @@
 
 echo "------ HOOK START - $* -------"
 
-BUILD_ARGS='--build-arg PACKAGES="socat so:libncursesw.so.6"'
+# Error loading shared library libncursesw.so.6: No such file or directory (needed by /usr/lib/libreadline.so.7)
+
+PACKAGES_LIST='[ "socat", "so:libncursesw.so.6"]'
+
+BUILD_ARGS="--build-arg PACKAGES=$PACKAGES_LIST"
 docker build $BUILD_ARGS -t $IMAGE_NAME .
 
 echo "------ HOOK END - $* -------"
