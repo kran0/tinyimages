@@ -1,6 +1,5 @@
 #!/bin/sh
 
-set -x
 echo "------ HOOK START - $* -------"
 
 PACKAGES="$(sed -ne '1s/^#//p' "$DOCKER_TAG.part")"
