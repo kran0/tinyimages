@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "------ HOOK START - $0 -------"
+
+cat "$DOCKER_TAG.part" >> Dockerfile
+
+echo "------ HOOK END - $0 -------"

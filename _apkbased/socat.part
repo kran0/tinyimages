@@ -1,0 +1,4 @@
+#socat so:libncursesw.so.6
+
+ENTRYPOINT [ "/usr/bin/socat" ]
+CMD [ "-h" ]

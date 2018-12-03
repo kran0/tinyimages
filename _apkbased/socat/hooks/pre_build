@@ -7,10 +7,10 @@ echo "------ HOOK START - $0 -------"
 cp ../apkextractor.sh ./
 
 (
- cat ../Dockerfile-apkbase.m4
+ cat ../Dockerfile
  echo '
 ENTRYPOINT [ "/usr/bin/socat" ]
-CMD [ "--help" ]
+CMD [ "-h" ]
 '
 ) > Dockerfile
 
