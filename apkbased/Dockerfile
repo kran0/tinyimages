@@ -4,7 +4,6 @@ ARG PACKAGES=socat
 
 ADD apkextractor.sh /
 RUN apk --update add ${PACKAGES}\
- && chmod +x /apkextractor.sh\
  && /apkextractor.sh ${PACKAGES}
 
 FROM scratch
