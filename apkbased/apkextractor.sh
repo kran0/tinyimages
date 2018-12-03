@@ -41,5 +41,5 @@ function getContains {
 }
 
 getContains $(getDependsOn "$@" | sort -u)\
- | tar c -C / -T -\
+ | tar vc -C / -T -\
  | tar x -C "$TARGET"
