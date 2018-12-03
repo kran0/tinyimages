@@ -1,0 +1,4 @@
+#openjdk8-jre
+
+ENTRYPOINT [ "/usr/bin/java" ]
+CMD [ "-h" ]
