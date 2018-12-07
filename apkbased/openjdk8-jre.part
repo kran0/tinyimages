@@ -1,5 +1,5 @@
 #openjdk8-jre
-#ln -ls /target/usr/bin/java ../lib/jvm/default-jvm/jre/bin/java;
+#ln -vs /target/usr/bin/java ../lib/jvm/default-jvm/jre/bin/java;
 
 ENTRYPOINT [ "/usr/bin/java" ]
 #ENTRYPOINT [ "/usr/lib/jvm/java-1.8-openjdk/bin/java" ]
