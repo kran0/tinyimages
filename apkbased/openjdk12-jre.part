@@ -6,7 +6,7 @@
 
 FROM openjdk:12-jdk-alpine as stage2
 
-FROM scratch
+FROM busybox
 COPY --from=stage1 / /
 COPY --from=stage2 /opt/openjdk-12 /opt/
 
