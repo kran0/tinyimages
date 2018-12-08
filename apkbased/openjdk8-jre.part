@@ -2,6 +2,8 @@
 
 COPY --from=apkextractor /usr/bin/java /usr/bin/
 
+FROM scratch
+COPY --from=stage1 / /
+
 ENTRYPOINT [ "/usr/bin/java" ]
-#ENTRYPOINT [ "/usr/lib/jvm/java-1.8-openjdk/bin/java" ]
 CMD [ "-h" ]
