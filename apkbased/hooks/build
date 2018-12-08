@@ -3,11 +3,9 @@
 echo "------ HOOK START - $* -------"
 
 PACKAGES="$(sed -ne '1s/^#//p' "$DOCKER_TAG.part")"
-AFTERRUN="$(sed -ne '2s/^#//p' "$DOCKER_TAG.part")"
 
 docker build\
  --build-arg PACKAGES="$PACKAGES"\
- --build-arg AFTERRUN="$AFTERRUN"\
  -t $IMAGE_NAME .
 
 echo "------ HOOK END - $* -------"
