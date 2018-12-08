@@ -1,5 +1,6 @@
 #openjdk8-jre
-#ln -vs /target/usr/bin/java ../lib/jvm/java-1.8-openjdk/bin/java;
+
+COPY --from=apkextractor /usr/bin/java /usr/bin/
 
 ENTRYPOINT [ "/usr/bin/java" ]
 #ENTRYPOINT [ "/usr/lib/jvm/java-1.8-openjdk/bin/java" ]
