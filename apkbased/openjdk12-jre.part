@@ -7,13 +7,13 @@
 FROM openjdk:12-jdk-alpine as stage2
 
 FROM busybox
-COPY --from=stage1 / /
+#COPY --from=stage1 / /
 COPY --from=stage2 /opt/openjdk-12 /opt/
 
 ENV JAVA_HOME /opt/openjdk-12
 ENV PATH $JAVA_HOME/bin:$PATH
 ENV JAVA_VERSION 12-ea+20
-RUN java -Xshare:dump
+RUN $JAVA_HOME/bin/java -Xshare:dump
 
 #ENTRYPOINT [ "/usr/bin/java" ]
 #CMD [ "-h" ]
