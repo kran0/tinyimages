@@ -4,7 +4,7 @@
 #COPY --from=apkextractor /usr/bin/java /usr/bin/
 #COPY --from=apkextractor /usr/lib/jvm/default-jvm /usr/lib/jvm/
 
-FROM 12-jdk-alpine as stage2
+FROM openjdk:12-jdk-alpine as stage2
 
 FROM scratch
 COPY --from=stage1 / /
