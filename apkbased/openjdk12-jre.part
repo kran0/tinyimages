@@ -10,7 +10,8 @@ FROM scratch
 COPY --from=stage1 / /
 COPY --from=stage2 /opt/openjdk-12 /opt/
 
-ENV PATH /opt/openjdk-12/bin:$PATH
+ENV JAVA_HOME /opt/openjdk-12
+ENV PATH $JAVA_HOME/bin:$PATH
 ENV JAVA_VERSION 12-ea+20
 RUN java -Xshare:dump
 
