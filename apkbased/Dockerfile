@@ -8,5 +8,5 @@ RUN apk --update add ${PACKAGES}\
  && /apkextractor.sh ${PACKAGES}\
  && ${AFTERRUN}
 
-FROM scratch
+FROM scratch as stage1
 COPY --from=apkextractor /target /
