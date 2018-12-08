@@ -1,9 +1,11 @@
 #openjdk8-jre
 
 COPY --from=apkextractor /usr/bin/java /usr/bin/
+COPY --from=apkextractor /usr/lib/jvm/default-jvm /usr/lib/jvm/
 
 FROM scratch
 COPY --from=stage1 / /
+
 
 ENTRYPOINT [ "/usr/bin/java" ]
 CMD [ "-h" ]
