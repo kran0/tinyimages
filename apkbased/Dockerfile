@@ -6,5 +6,5 @@ ADD apkextractor.sh /
 RUN apk --update add ${PACKAGES}\
  && /apkextractor.sh ${PACKAGES}
 
-FROM scratch as stage1
+FROM scratch
 COPY --from=apkextractor /target /
