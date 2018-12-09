@@ -1,5 +1,8 @@
 #openjdk8-jre so:openjdk8:libjli.so
  #alpine-baselayout
 
-ENTRYPOINT [ "/usr/lib/jvm/java-1.8-openjdk/bin/java" ]
+ENV PATH /usr/lib/jvm/java-1.8-openjdk/bin/
+
+#ENTRYPOINT [ "/usr/lib/jvm/java-1.8-openjdk/bin/java" ]
+ENTRYPOINT [ "java" ]
 CMD [ "-h" ]
