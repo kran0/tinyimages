@@ -1,12 +1,4 @@
 #openjdk8-jre alpine-baselayout
 
-COPY --from=apkextractor /usr/bin/java /usr/bin/
-COPY --from=apkextractor /usr/lib/jvm/default-jvm /usr/lib/jvm/
-
-FROM scratch
-COPY --from=stage1 / /
-
-#ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
 ENTRYPOINT [ "/usr/bin/java" ]
 CMD [ "-h" ]
