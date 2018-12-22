@@ -33,11 +33,19 @@ function getDependsOn {
 
 function getContains {
 # find unique file names containeing in given packages
+ (
+
+# [ -z "$ADD_FILES" ]\
+#  || printf '%s\n' $ADD_FILES
+ printf '%s\n' $ADD_FILES
+
  [ -z "$1" ]\
-  || apk info -L "$@"\
-     | sed -e '/ contains:$/d'\
-           -e '/^[[:space:]]*$/d'\
-     | sort -u
+  || apk info -L "$@" | sed -e '/ contains:$/d'
+
+ )\
+  | sed -e '/^[[:space:]]*$/d'\
+  | sort -u
+
 }
 
 getContains $(getDependsOn "$@" | sort -u)\
