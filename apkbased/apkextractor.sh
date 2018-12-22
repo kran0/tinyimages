@@ -6,14 +6,13 @@
 # USAGE: $0 PACKAGE [PACKAGE] ... [PACKAGE]
 #
 
-[ -z "$1" ]      && exit 0
+[ -z "$1" ]      && exit 0            #We need packages names in $@
 [ -z "$TARGET" ] && TARGET="/target"
-#[ -d "$TARGET" ] && mkdir -p "$TARGET"
 mkdir -p "$TARGET"
 
 
-function getDependsOn {
-# find full number of depencies
+function getDependsOn {               # find full number of depencies
+
  [ -z "$1" ] && exit 0
 
  if [ -z "$SEENFILE" ]
@@ -31,8 +30,7 @@ function getDependsOn {
  [ -f "$SEENFILE" ] && rm "$SEENFILE"
 }
 
-function getContains {
-# find unique file names containeing in given packages
+function getContains {    # find unique file names containing in given packages
  (
 
  [ -z "$ADDFILES" ]\
@@ -46,6 +44,8 @@ function getContains {
   | sort -u
 
 }
+
+# MAIN call
 
 getContains $(getDependsOn "$@" | sort -u)\
  | tar vc -C / -T -\
