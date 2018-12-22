@@ -35,9 +35,8 @@ function getContains {
 # find unique file names containeing in given packages
  (
 
-# [ -z "$ADD_FILES" ]\
-#  || printf '%s\n' $ADD_FILES
- printf '%s\n' $ADD_FILES
+ [ -z "$ADDFILES" ]\
+  || printf '%s\n' $ADDFILES
 
  [ -z "$1" ]\
   || apk info -L "$@" | sed -e '/ contains:$/d'
