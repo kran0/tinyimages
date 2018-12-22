@@ -1,5 +1,4 @@
-#openjdk8-jre so:openjdk8:libjli.so java-cacerts
- #alpine-baselayout
+#openjdk8-jre so:openjdk8:libjli.so alpine-baselayout
 
 ENV PATH /usr/lib/jvm/java-1.8-openjdk/bin/
 
