@@ -1,3 +1,4 @@
+#musl busybox alpine-baselayout alpine-keys libressl2.7-libcrypto libressl2.7-libssl libressl2.7-libtls ssl_client zlib apk-tools scanelf musl-utils libc-utils libffi p11-kit libtasn1 p11-kit-trust ca-certificates java-cacerts libxau libbsd libxdmcp libxcb libx11 libxcomposite libxext libxi libxrender libxtst alsa-lib libbz2 libpng freetype libgcc giflib libjpeg-turbo libstdc++ openjdk8-jre-lib java-common krb5-conf libcom_err keyutils-libs libverto krb5-libs lcms2 nspr sqlite-libs nss pcsc-lite-libs lksctp-tools openjdk8-jre-base openjdk8-jre
 #openjdk8-jre so:openjdk8:libjli.so alpine-baselayout
 
 ENV PATH /usr/lib/jvm/java-1.8-openjdk/bin/
