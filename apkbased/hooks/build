@@ -2,8 +2,8 @@
 
 echo "------ HOOK START - $* -------"
 
-PACKAGES="$(sed -ne '1s/^#//p' "$DOCKER_TAG.part")"
-ADDFILES="$(sed -ne '2s/^#//p' "$DOCKER_TAG.part")"
+PACKAGES="$(sed -ne '1s/^#//p' "$DOCKER_TAG.part")" #first line : PACKAGES
+ADDFILES="$(sed -ne '2s/^#//p' "$DOCKER_TAG.part")" #second line: ADDFILES
 
 docker build\
  --build-arg PACKAGES="$PACKAGES"\
