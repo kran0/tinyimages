@@ -1,4 +1,4 @@
-FROM alpine:3.13.5 as apkextractor
+FROM alpine:latest as apkextractor
 
 ARG PACKAGES=musl
 ARG ADDFILES
