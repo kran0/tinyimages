@@ -1,0 +1,8 @@
+# Simple smoke test for all built containers
+# Pass if container default ENTRYPOINT+CMD returns 0
+# Fail if container default ENTRYPOINT+CMD returns non-zero
+
+version: '2'
+services:
+  sut:
+    image: ${IMAGE_NAME}
