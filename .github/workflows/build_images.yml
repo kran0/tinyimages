@@ -15,10 +15,7 @@ jobs:
       max-parallel: 1
       matrix:
         alpine-version: [ latest, edge ]
-        name:
-          - socat
-            tor
-            svn
+        name: [ socat, tor, svn ]
         include:
 
           - name: socat
