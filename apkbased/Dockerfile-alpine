@@ -1,4 +1,5 @@
-FROM alpine:latest as apkextractor
+ARG ALPINE_VERSION=latest
+FROM alpine:${ALPINE_VERSION} as apkextractor
 
 ARG PACKAGES=musl
 ARG ADDFILES
@@ -9,3 +10,9 @@ RUN apk --update add ${PACKAGES}\
 
 FROM scratch
 COPY --from=apkextractor /target /
+
+ARG ENTRYPOINT=
+ENTRYPOINT ${ENTRYPOINT}
+
+ARG COMMAND=
+CMD ${COMMAND}
