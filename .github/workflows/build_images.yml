@@ -28,6 +28,12 @@ jobs:
             entrypoint: /usr/bin/tor
             command: -h
 
+#          - name: openjdk8-jre
+#            packages: openjdk8-jre so:openjdk8:libjli.so
+#            entrypoint: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+#            command: -h
+#ENV PATH /usr/lib/jvm/java-1.8-openjdk/bin/
+
           - name: svn
             packages: subversion
             entrypoint: /usr/bin/svn
