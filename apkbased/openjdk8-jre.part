@@ -1,9 +1,0 @@
-#openjdk8-jre so:openjdk8:libjli.so
-#/etc/ssl/certs/java/cacerts
-
-#keytool -importcert -keypass changeit -file /etc/ssl/certs/ca-certificates.crt -keystore /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/cacerts -noprompt -storepass changeit
-
-ENV PATH /usr/lib/jvm/java-1.8-openjdk/bin/
-
-ENTRYPOINT [ "java" ]
-CMD [ "-h" ]
