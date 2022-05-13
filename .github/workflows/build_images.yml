@@ -14,8 +14,8 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        alpine-version: latest
-        alpine-platforms: linux/amd64
+        alpine-version: [ latest ]
+        alpine-platforms: [ linux/amd64 ]
         include:
 
           - name: socat
