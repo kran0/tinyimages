@@ -53,8 +53,7 @@ jobs:
           *     ) TAG="${DOCKER_IMAGE}:${{matrix.name}}"      ;;
          esac
 
-         mkdir -vp ./tmp
-         DOCKERFILE=$(mktemp --tmpdir=./tmp)
+         DOCKERFILE=$(mktemp --tmpdir=${HOME}) # $HOME are persisted between actions in the same job?
          (
          cat ./apkbased/Dockerfile-alpine
          cat <<DOCKERFILE
