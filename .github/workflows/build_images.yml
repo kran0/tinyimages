@@ -14,7 +14,7 @@ jobs:
     strategy:
       max-parallel: 8
       matrix:
-        alpine-version: [ latest, edge ]
+        alpine-version: [ edge, latest ]
         name: [ socat, tor, svn ]
         include:
 
