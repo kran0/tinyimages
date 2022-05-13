@@ -10,9 +10,3 @@ RUN apk --update add ${PACKAGES}\
 
 FROM scratch
 COPY --from=apkextractor /target /
-
-ARG ENTRYPOINT=
-ENTRYPOINT ${ENTRYPOINT}
-
-ARG COMMAND=
-CMD ${COMMAND}
