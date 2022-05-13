@@ -76,7 +76,7 @@ jobs:
           file: Dockerfile-alpine
           platforms: ${{ matrix.alpine-platforms }}
           push: true
-          tags: ${{ secrets.DOCKERHUB_USER }}/tiny/${{ matrix.name }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/tiny:${{ matrix.name }}
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine-version }}
             PACKAGES=${{ matrix.packages }}
