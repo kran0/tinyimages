@@ -15,7 +15,10 @@ jobs:
       max-parallel: 1
       matrix:
         alpine-version: [ latest, edge ]
-        name: [ socat, tor ]
+        name:
+          - socat
+            tor
+            svn
         include:
 
           - name: socat
@@ -26,6 +29,11 @@ jobs:
           - name: tor
             packages: tor
             entrypoint: /usr/bin/tor
+            command: -h
+
+          - name: svn
+            packages: subversion
+            entrypoint: /usr/bin/svn
             command: -h
 
     steps:
