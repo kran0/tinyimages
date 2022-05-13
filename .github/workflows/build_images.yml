@@ -53,18 +53,13 @@ jobs:
           *     ) TAG="${DOCKER_IMAGE}:${{matrix.name}}"      ;;
          esac
 
-         DOCKERFILE="Dockerfile-${{matrix.name}}-${{ matrix.alpine-version }}" #
-         (
-         cat ./apkbased/Dockerfile-alpine
-         cat <<DOCKERFILE
+         cat <<DOCKERFILE > "./apkbased/Dockerfile-alpine"
          ENTRYPOINT ${{matrix.entrypoint}}
          CMD  ${{matrix.command}}
          DOCKERFILE
-         ) > "./apkbased/${DOCKERFILE}"
 
          # Set output parameters.
          echo ::set-output name=tag::${TAG}
-         echo ::set-output name=dockerfile::${DOCKERFILE}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -87,7 +82,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: "{{defaultContext}}:apkbased"
-          file: ${{ steps.prep.outputs.dockerfile }}
+          file: Dockerfile-alpine
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           push: true
           tags: ${{ steps.prep.outputs.tag }}
