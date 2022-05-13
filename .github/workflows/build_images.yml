@@ -77,9 +77,8 @@ jobs:
           platforms: ${{ matrix.alpine-platforms }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USER }}/tinyimages/${{ matrix.name }}
-          build-args:
-            ALPINE_VERSION: ${{ matrix.alpine-version }}
-            PACKAGES: ${{ matrix.packages }}
-            ADDFILES: ${{ matrix.addfiles }}
-            ENTRYPOINT: ${{ matrix.entrypoint }}
-            COMMAND: ${{ matrix.command }}
+          build-args: [ "ALPINE_VERSION=${{ matrix.alpine-version }}",
+                        "PACKAGES=${{ matrix.packages }}",
+                        "ADDFILES=${{ matrix.addfiles }}",
+                        "ENTRYPOINT=${{ matrix.entrypoint }}",
+                        "COMMAND=${{ matrix.command }}" ]
