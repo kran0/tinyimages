@@ -14,7 +14,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        alpine-version: [ latest ]
+        alpine-version: [ latest, edge ]
         alpine-platforms: [ linux/amd64 ]
         include:
 
@@ -31,6 +31,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Prepare
+        id: prep
+        run: |
+          DOCKER_IMAGE=${{ secrets.DOCKERHUB_USER }}/${GITHUB_REPOSITORY#*/}
+
+          case "${{ matrix.alpine-version }}" in
+           'edge') TAGS="${DOCKER_IMAGE}:${{matrix.name}}-edge" ;;
+           *     ) TAGS="${DOCKER_IMAGE}:${{matrix.name}}"      ;;
+          esac
+
+          if [ ${{ matrix.alpine-version }} == 'edge' ]; then
+            TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${{ matrix.alpine-version }}"
+          fi
+
+          # Set output parameters.
+          echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=test_tag::${TEST_TAG}
+          echo ::set-output name=docker_image::${DOCKER_IMAGE}
+          echo ::set-output name=build_args::${BUILD_ARGS}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -52,7 +72,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: ./apkbased
+          context: "{{defaultContext}}:apkbased"
           file: Dockerfile-alpine
           platforms: ${{ matrix.alpine-platforms }}
           push: true
