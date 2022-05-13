@@ -12,7 +12,7 @@ jobs:
   alpine-based:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
+      max-parallel: 8
       matrix:
         alpine-version: [ latest, edge ]
         name: [ socat, tor, svn ]
