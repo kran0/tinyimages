@@ -53,7 +53,8 @@ jobs:
           *     ) TAG="${DOCKER_IMAGE}:${{matrix.name}}"      ;;
          esac
 
-         DOCKERFILE=$(mktemp)
+         mkdir -vp ./tmp
+         DOCKERFILE=$(mktemp --tmpdir=./tmp)
          (
          cat ./apkbased/Dockerfile-alpine
          cat <<DOCKERFILE
