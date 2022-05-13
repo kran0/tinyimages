@@ -15,7 +15,7 @@ jobs:
       max-parallel: 1
       matrix:
         alpine-version: [ latest, edge ]
-        alpine-platforms: [ linux/amd64 ]
+        alpine-platforms: [ linux/386, linux/amd64, linux/arm/v6, linux/arm/v7, linux/arm64/v8, linux/ppc64le, linux/s390x ]
         include:
 
           - name: socat
@@ -35,22 +35,15 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=${{ secrets.DOCKERHUB_USER }}/${GITHUB_REPOSITORY#*/}
+          DOCKER_IMAGE=${{ secrets.DOCKERHUB_USER }}/tiny
 
           case "${{ matrix.alpine-version }}" in
            'edge') TAGS="${DOCKER_IMAGE}:${{matrix.name}}-edge" ;;
            *     ) TAGS="${DOCKER_IMAGE}:${{matrix.name}}"      ;;
           esac
 
-          if [ ${{ matrix.alpine-version }} == 'edge' ]; then
-            TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${{ matrix.alpine-version }}"
-          fi
-
           # Set output parameters.
           echo ::set-output name=tags::${TAGS}
-          echo ::set-output name=test_tag::${TEST_TAG}
-          echo ::set-output name=docker_image::${DOCKER_IMAGE}
-          echo ::set-output name=build_args::${BUILD_ARGS}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -76,7 +69,7 @@ jobs:
           file: Dockerfile-alpine
           platforms: ${{ matrix.alpine-platforms }}
           push: true
-          tags: ${{ secrets.DOCKERHUB_USER }}/tiny:${{ matrix.name }}
+          tags: ${{ prep.tags }}
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine-version }}
             PACKAGES=${{ matrix.packages }}
