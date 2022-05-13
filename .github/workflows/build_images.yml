@@ -52,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: apkbased
+          context: ./apkbased
           file: Dockerfile-alpine
           platforms: ${{ matrix.alpine-platforms }}
           push: true
