@@ -104,7 +104,7 @@ jobs:
          #docker run -i "${IMAGE_NAME}"
          #podman run -i "${IMAGE_NAME}"
 
-         docker-compose up sut 2> tee testlog
+         docker-compose up sut 2> testlog
          cat testlog
          tail --lines=1 testlog | grep 'tests_sut_1 exited with code 0'
          docker-compose down
