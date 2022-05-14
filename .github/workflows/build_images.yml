@@ -15,11 +15,11 @@ jobs:
       max-parallel: 2
       matrix:
         alpine-version: [ edge, latest ]
-        name: [ socat, tor, svn ]
+        name: [ socat, tor, svn, jq ]
         include:
 
           - name: socat
-            packages: socat so:libncursesw.so.6
+            packages: socat
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/socat" ]
              CMD [ "-h" ]
@@ -31,9 +31,15 @@ jobs:
              CMD [ "-h" ]
 
           - name: svn
-            packages: subversion subversion-libs expat zlib sqlite-libs lz4-libs libuuid libsasl serf apr apr-util gdbm
+            packages: subversion
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/svn" ]
+             CMD [ "-h" ]
+
+          - name: jq
+            packages: jq
+            dockerfile-bottom: |
+             ENTRYPOINT [ "/usr/bin/jq" ]
              CMD [ "-h" ]
 
     steps:
