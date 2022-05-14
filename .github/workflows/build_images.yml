@@ -6,7 +6,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: '15 4 * * sun,tue,thu,sat'
+    - cron: '15 4 * * sun'
 
 jobs:
   alpine-based:
