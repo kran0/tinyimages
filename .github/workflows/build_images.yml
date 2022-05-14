@@ -16,31 +16,14 @@ jobs:
       matrix:
         alpine-version: [ edge, latest ]
         name: [ socat, tor, svn, jq ]
+        packages: ${{matrix.name}}
+        dockerfile-bottom: |
+         ENTRYPOINT [ "/usr/bin/${{matrix.name}}" ]
+         CMD [ "-h" ]
+
         include:
-
-          - name: socat
-            packages: socat
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/socat" ]
-             CMD [ "-h" ]
-
-          - name: tor
-            packages: tor
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/tor" ]
-             CMD [ "-h" ]
-
           - name: svn
             packages: subversion
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/svn" ]
-             CMD [ "-h" ]
-
-          - name: jq
-            packages: jq
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/jq" ]
-             CMD [ "-h" ]
 
     steps:
       - name: Checkout
