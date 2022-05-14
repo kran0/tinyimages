@@ -101,5 +101,5 @@ jobs:
           IMAGE_NAME: ${{ steps.prep.outputs.tag }}
         run: |
          set -e
-         docker-compose up sut
+         docker-compose up sut || exit 1
          docker-compose down
