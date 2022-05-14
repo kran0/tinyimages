@@ -36,12 +36,12 @@ jobs:
              ENTRYPOINT [ "/usr/bin/svn" ]
              CMD [ "-h" ]
 
-#          - name: openjdk8-jre
-#            packages: openjdk8-jre so:openjdk8:libjli.so
-#            entrypoint: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
-#            command: -h
-#ENV PATH /usr/lib/jvm/java-1.8-openjdk/bin/
-
+          - name: openjdk8-jre
+            packages: openjdk8-jre expat brotli-libs libbz2 libpng freetype libuuid fontconfig encodings libfontenc mkfontscale ttf-dejavu libxau libmd libbsd libxdmcp libxcb libx11 libxcomposite libxext libxi libxrender libxtst alsa-lib libgcc giflib libjpeg-turbo libstdc++ openjdk8-jre-lib java-common libffi p11-kit libtasn1 p11-kit-trust ca-certificates java-cacerts nspr sqlite-libs nss krb5-conf libcom_err keyutils-libs libverto krb5-libs lcms2 pcsc-lite-libs liblksctp openjdk8-jre-base openjdk8-jre
+            dockerfile-bottom: |
+             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
+             ENTRYPOINT [ "java" ]
+             CMD [ "-h" ]
 
     steps:
       - name: Checkout
