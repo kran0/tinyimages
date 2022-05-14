@@ -20,13 +20,21 @@ jobs:
 
           - name: socat
             packages: socat so:libncursesw.so.6
-            entrypoint: '[ "/usr/bin/socat" ]'
-            command: '[ "-h" ]'
+            dockerfile-bottom: |
+             ENTRYPOINT [ "/usr/bin/socat" ]
+             CMD [ "-h" ]
 
           - name: tor
             packages: tor
-            entrypoint: /usr/bin/tor
-            command: -h
+            dockerfile-bottom: |
+             ENTRYPOINT [ "/usr/bin/tor" ]
+             CMD [ "-h" ]
+
+          - name: svn
+            packages: subversion
+            dockerfile-bottom: |
+             ENTRYPOINT [ "/usr/bin/svn" ]
+             CMD [ "-h" ]
 
 #          - name: openjdk8-jre
 #            packages: openjdk8-jre so:openjdk8:libjli.so
@@ -34,10 +42,6 @@ jobs:
 #            command: -h
 #ENV PATH /usr/lib/jvm/java-1.8-openjdk/bin/
 
-          - name: svn
-            packages: subversion
-            entrypoint: /usr/bin/svn
-            command: -h
 
     steps:
       - name: Checkout
@@ -53,11 +57,8 @@ jobs:
           *     ) TAG="${DOCKER_IMAGE}:${{matrix.name}}"      ;;
          esac
 
-         cat << DOCKERFILE >> "./Dockerfile-alpine"
-         ENTRYPOINT ${{matrix.entrypoint}}
-         CMD  ${{matrix.command}}
-         DOCKERFILE
-         cat ./Dockerfile-alpine
+         # Do the tinyimages magic here
+         echo '${{ matrix.dockerfile-bottom }}' >> ./Dockerfile-alpine
 
          # Set output parameters.
          echo ::set-output name=tag::${TAG}
