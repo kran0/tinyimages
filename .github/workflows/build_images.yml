@@ -100,6 +100,5 @@ jobs:
           COMPOSE_FILE: ./tests/compose-sut.yaml
           IMAGE_NAME: ${{ steps.prep.outputs.tag }}
         run: |
-         /bin/false
-         docker-compose up sut
+         docker-compose up sut || /bin/false
          docker-compose down
