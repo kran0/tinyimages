@@ -95,7 +95,7 @@ jobs:
             ENTRYPOINT=${{ matrix.entrypoint }}
             COMMAND=${{ matrix.command }}
 
-          - name: Test default arch
+      - name: Test default arch
         env:
           COMPOSE_FILE: ./tests/compose-sut.yaml
           IMAGE_NAME: ${{ steps.prep.outputs.tag }}
