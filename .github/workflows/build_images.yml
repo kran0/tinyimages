@@ -57,6 +57,7 @@ jobs:
          ENTRYPOINT ${{matrix.entrypoint}}
          CMD  ${{matrix.command}}
          DOCKERFILE
+         cat ./apkbased/Dockerfile-alpine
 
          # Set output parameters.
          echo ::set-output name=tag::${TAG}
