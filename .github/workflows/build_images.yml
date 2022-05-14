@@ -100,11 +100,11 @@ jobs:
           COMPOSE_FILE: ./tests/compose-sut.yaml
           IMAGE_NAME: ${{ steps.prep.outputs.tag }}
         run: |
-         set -ex
-         #docker run -i "${IMAGE_NAME}"
-         #podman run -i "${IMAGE_NAME}"
-
-         docker-compose --verbose --no-ansi up sut | tee testlog
-         cat testlog
-         tail --lines=1 testlog | grep 'tests_sut_1 exited with code 0'
+         TEST_LOG="$(mktemp)"
+         docker-compose --verbose --no-ansi up sut | tee ${TEST_LOG}
+         tail --lines=1 testlog | grep '^tests_sut_1 exited with code 0$'
+         rm "${TEST_LOG}"
          docker-compose down
+
+         docker run -i "${IMAGE_NAME}"
+         podman run -i "${IMAGE_NAME}"
