@@ -15,7 +15,7 @@ jobs:
       max-parallel: 2
       matrix:
         alpine-version: [ edge, latest ]
-        name: [ socat, tor, svn, openjdk8-jre ]
+        name: [ socat, tor, svn ]
         include:
 
           - name: socat
@@ -34,13 +34,6 @@ jobs:
             packages: subversion subversion-libs expat zlib sqlite-libs lz4-libs libuuid libsasl serf apr apr-util gdbm
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/svn" ]
-             CMD [ "-h" ]
-
-          - name: openjdk8-jre
-            packages: openjdk8-jre expat brotli-libs libbz2 libpng freetype libuuid fontconfig encodings libfontenc mkfontscale ttf-dejavu libxau libmd libbsd libxdmcp libxcb libx11 libxcomposite libxext libxi libxrender libxtst alsa-lib libgcc giflib libjpeg-turbo libstdc++ openjdk8-jre-lib java-common libffi p11-kit libtasn1 p11-kit-trust ca-certificates java-cacerts nspr sqlite-libs nss krb5-conf libcom_err keyutils-libs libverto krb5-libs lcms2 pcsc-lite-libs liblksctp openjdk8-jre-base openjdk8-jre
-            dockerfile-bottom: |
-             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
-             ENTRYPOINT [ "java" ]
              CMD [ "-h" ]
 
     steps:
