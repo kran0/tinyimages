@@ -95,14 +95,14 @@ jobs:
             ENTRYPOINT=${{ matrix.entrypoint }}
             COMMAND=${{ matrix.command }}
 
-      - name: Test default arch
+          - name: Test default arch
         env:
           COMPOSE_FILE: ./tests/compose-sut.yaml
           IMAGE_NAME: ${{ steps.prep.outputs.tag }}
         run: |
          TEST_LOG="$(mktemp)"
-         docker-compose --verbose --no-ansi up sut | tee ${TEST_LOG}
-         tail --lines=1 testlog | grep '^tests_sut_1 exited with code 0$'
+         docker-compose --verbose --no-ansi up sut | tee "${TEST_LOG}"
+         tail --lines=1 "${TEST_LOG}" | grep '^tests_sut_1 exited with code 0$'
          rm "${TEST_LOG}"
          docker-compose down
 
