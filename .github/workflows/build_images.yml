@@ -31,7 +31,7 @@ jobs:
              CMD [ "-h" ]
 
           - name: svn
-            packages: subversion
+            packages: subversion subversion-libs expat zlib sqlite-libs lz4-libs libuuid libsasl serf apr apr-util gdbm
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/svn" ]
              CMD [ "-h" ]
