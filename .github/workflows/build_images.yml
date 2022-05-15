@@ -101,7 +101,7 @@ jobs:
           context: .
           file: ./Dockerfile-alpine
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          push: false
+          push: true
           tags: ${{ steps.prep.outputs.tag }}
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine-version }}
@@ -124,4 +124,5 @@ jobs:
          podman run -i "${IMAGE_NAME}"
 
          # OK, do the push
-         docker manifest push "${IMAGE_NAME}"
+         # todo: fix that?
+         #docker manifest push "${IMAGE_NAME}"
