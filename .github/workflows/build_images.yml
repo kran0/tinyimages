@@ -28,25 +28,25 @@ jobs:
             packages: tor
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/tor" ]
-             CMD [ "-h" ]
+             CMD [ "--help" ]
 
           - name: svn
             packages: subversion
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/svn" ]
-             CMD [ "-h" ]
+             CMD [ "--help" ]
 
           - name: jq
             packages: jq
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/jq" ]
-             CMD [ "-h" ]
+             CMD [ "--help" ]
 
           - name: xmlstarlet
             packages: xmlstarlet
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/xmlstarlet" ]
-             CMD [ "-h" ]
+             CMD [ "--help" ]
 
     steps:
       - name: Checkout
