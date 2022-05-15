@@ -16,7 +16,7 @@ jobs:
       matrix:
         alpine-version: [ edge, latest ]
         name: [ socat, tor, svn, jq, xmlstarlet, curl ]
-        command: '[ "--help" ]'
+        command: "[ \"--help\" ]"
         include:
           # Example
           - name: openjdk8-jre
@@ -91,7 +91,7 @@ jobs:
           tags: ${{ steps.prep.outputs.tag }}
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine-version }}
-            PACKAGES=${{ steps.prep.outputs..packages }}
+            PACKAGES=${{ steps.prep.outputs.packages }}
             ADDFILES=${{ matrix.files }}
 
       - name: Test default arch
