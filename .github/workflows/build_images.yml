@@ -16,43 +16,23 @@ jobs:
       matrix:
         alpine-version: [ edge, latest ]
         name: [ socat, tor, svn, jq, xmlstarlet, curl ]
+        command: '[ "--help" ]'
         include:
+          # Example
+          - name: openjdk8-jre
+            packages: openjdk8-jre ca-certificates-bundle
+            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+            entrypoint: '[ "java" ]'
+            command: '[ "-version" ]'
+            dockerfile-bottom: |
+             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
 
           - name: socat
-            packages: socat
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/socat" ]
-             CMD [ "-h" ]
-
-          - name: tor
-            packages: tor
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/tor" ]
-             CMD [ "--help" ]
+            command: '[ "-h" ]'
 
           - name: svn
-            packages: subversion ca-certificates-bundle
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/svn" ]
-             CMD [ "--help" ]
-
-          - name: jq
-            packages: jq
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/jq" ]
-             CMD [ "--help" ]
-
-          - name: xmlstarlet
-            packages: xmlstarlet
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/xmlstarlet" ]
-             CMD [ "--help" ]
-
-          - name: curl
-            packages: curl
-            dockerfile-bottom: |
-             ENTRYPOINT [ "/usr/bin/curl" ]
-             CMD [ "--help" ]
+            packages: subversion
+            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
 
     steps:
       - name: Checkout
@@ -63,16 +43,26 @@ jobs:
         run: |
          DOCKER_IMAGE=${{ secrets.DOCKERHUB_USER }}/tiny
 
-         case "${{ matrix.alpine-version }}" in
+         # Calculate Image TAG
+         case '${{ matrix.alpine-version }}' in
           'edge') TAG="${DOCKER_IMAGE}:${{matrix.name}}-edge" ;;
           *     ) TAG="${DOCKER_IMAGE}:${{matrix.name}}"      ;;
          esac
 
+         # Calculate packages list
+         PACKAGES='${{matrix.name}}'
+         [ -z '${{matrix.packages}}' ] || PACKAGES='${{matrix.packages}}'
+
          # Do the tinyimages magic here
-         echo '${{ matrix.dockerfile-bottom }}' >> ./Dockerfile-alpine
+         {
+          [ -z '${{ matrix.entrypoint }}' ] && echo ENTRYPOINT [ "/usr/bin/${{matrix.name}}" ] || echo ENTRYPOINT '${{ matrix.entrypoint }}'
+          [ -z '${{ matrix.command }}' ] || echo CMD '${{ matrix.command }}'
+          echo '${{ matrix.dockerfile-bottom }}';
+         } >> ./Dockerfile-alpine
 
          # Set output parameters.
          echo ::set-output name=tag::${TAG}
+         echo ::set-output name=packages::${PACKAGES}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -101,10 +91,8 @@ jobs:
           tags: ${{ steps.prep.outputs.tag }}
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine-version }}
-            PACKAGES=${{ matrix.packages }}
-            ADDFILES=${{ matrix.addfiles }}
-            ENTRYPOINT=${{ matrix.entrypoint }}
-            COMMAND=${{ matrix.command }}
+            PACKAGES=${{ steps.prep.outputs..packages }}
+            ADDFILES=${{ matrix.files }}
 
       - name: Test default arch
         env:
