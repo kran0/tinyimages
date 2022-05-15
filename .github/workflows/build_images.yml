@@ -31,7 +31,7 @@ jobs:
              CMD [ "--help" ]
 
           - name: svn
-            packages: subversion
+            packages: subversion ca-certificates-bundle
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/svn" ]
              CMD [ "--help" ]
