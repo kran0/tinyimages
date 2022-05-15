@@ -1,0 +1,14 @@
+# Simple build test for all containers
+# Pass if build returns 0
+# Fail if build non-zero
+
+version: '2'
+services:
+  sut:
+    build:
+      context: ../
+      dockerfile: Dockerfile-alpine
+      args:
+        ALPINE_VERSION: ${ALPINE_VERSION}
+        PACKAGES: ${PACKAGES}
+        ADDFILES: ${ADDFILES}

@@ -94,6 +94,20 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Simple build and run test
+        env:
+          IMAGE_NAME: test:${{matrix.name}}
+          ALPINE_VERSION=${{ matrix.alpine-version }}
+          PACKAGES=${{ steps.prep.outputs.packages }}
+          ADDFILES=${{ matrix.files }}
+        run: |
+         set -x
+         TEST_LOG="$(mktemp)"
+         docker-compose --no-ansi -f ./tests/compose-sut.yaml -f ./tests/compose-build-sut.yaml up --build sut | tee "${TEST_LOG}"
+         docker-compose down
+         test "$(tail --lines=1 ${TEST_LOG})" '==' 'tests_sut_1 exited with code 0'
+         rm "${TEST_LOG}"
+
       - name: Build
         uses: docker/build-push-action@v3
         with:
@@ -108,7 +122,7 @@ jobs:
             PACKAGES=${{ steps.prep.outputs.packages }}
             ADDFILES=${{ matrix.files }}
 
-      - name: Test default arch and push
+      - name: After push default arch test
         env:
           COMPOSE_FILE: ./tests/compose-sut.yaml
           IMAGE_NAME: ${{ steps.prep.outputs.tag }}
@@ -122,7 +136,3 @@ jobs:
 
          docker run -i "${IMAGE_NAME}"
          podman run -i "${IMAGE_NAME}"
-
-         # OK, do the push
-         # todo: fix that?
-         #docker manifest push "${IMAGE_NAME}"
