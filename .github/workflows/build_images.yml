@@ -98,7 +98,7 @@ jobs:
         env:
           IMAGE_NAME: test:${{matrix.name}}
           ALPINE_VERSION: ${{ matrix.alpine-version }}
-          PACKAGES: '${{ steps.prep.outputs.packages }}
+          PACKAGES: ${{ steps.prep.outputs.packages }}
           ADDFILES: ${{ matrix.files }}
         run: |
          set -x
