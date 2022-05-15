@@ -18,11 +18,11 @@ jobs:
         name: [ socat, tor, svn, jq, xmlstarlet, curl, java ]
         include:
           # Example
-          - name: java # do not forget to add this name to the matrix names above!
-            packages: openjdk8-jre ca-certificates-bundle
-            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
-            entrypoint: '[ "java" ]'
-            command: '[ "-version" ]'
+          - name: java # Add this name to the matrix names above!
+            packages: openjdk8-jre ca-certificates-bundle # Default: ${{matrix.name}}
+            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt' # Add certain files, not packages
+            entrypoint: '[ "java" ]'                      # Default: '[ "/usr/bin/${{matrix.name}}" ]'
+            command: '[ "-version" ]'                     # Default: '[ "--help" ]'
             dockerfile-bottom: |
              ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
 
@@ -40,6 +40,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
+         set -x
          DOCKER_IMAGE=${{ secrets.DOCKERHUB_USER }}/tiny
 
          # Calculate Image TAG
@@ -58,6 +59,8 @@ jobs:
           [ -z '${{ matrix.command }}' ] && echo CMD '[ "--help" ]' || echo CMD '${{ matrix.command }}'
           echo '${{ matrix.dockerfile-bottom }}';
          } >> ./Dockerfile-alpine
+
+         cat ./Dockerfile-alpine
 
          # Set output parameters.
          echo ::set-output name=tag::${TAG}
