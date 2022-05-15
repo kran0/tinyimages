@@ -42,6 +42,12 @@ jobs:
              ENTRYPOINT [ "/usr/bin/jq" ]
              CMD [ "-h" ]
 
+          - name: xmlstarlet
+            packages: xmlstarlet
+            dockerfile-bottom: |
+             ENTRYPOINT [ "/usr/bin/xmlstarlet" ]
+             CMD [ "-h" ]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
