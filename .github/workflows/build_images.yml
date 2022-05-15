@@ -16,7 +16,6 @@ jobs:
       matrix:
         alpine-version: [ edge, latest ]
         name: [ socat, tor, svn, jq, xmlstarlet, curl ]
-        command: --help
         include:
           # Example
           - name: openjdk8-jre
@@ -56,7 +55,7 @@ jobs:
          # Do the tinyimages magic here
          {
           [ -z '${{ matrix.entrypoint }}' ] && echo ENTRYPOINT [ "/usr/bin/${{matrix.name}}" ] || echo ENTRYPOINT '${{ matrix.entrypoint }}'
-          [ -z '${{ matrix.command }}' ] || echo CMD '${{ matrix.command }}'
+          [ -z '${{ matrix.command }}' ] && echo CMD --help || echo CMD '${{ matrix.command }}'
           echo '${{ matrix.dockerfile-bottom }}';
          } >> ./Dockerfile-alpine
 
