@@ -12,10 +12,10 @@ jobs:
   alpine-based:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 2
+      max-parallel: 8
       matrix:
         alpine-version: [ edge, latest ]
-        name: [ socat, tor, svn, jq ]
+        name: [ socat, tor, svn, jq, xmlstarlet ]
         include:
 
           - name: socat
