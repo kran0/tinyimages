@@ -15,10 +15,10 @@ jobs:
       max-parallel: 8
       matrix:
         alpine-version: [ edge, latest ]
-        name: [ socat, tor, svn, jq, xmlstarlet, curl ]
+        name: [ socat, tor, svn, jq, xmlstarlet, curl, java ]
         include:
           # Example
-          - name: openjdk8-jre
+          - name: java # do not forget to add this name to the matrix names above!
             packages: openjdk8-jre ca-certificates-bundle
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
             entrypoint: '[ "java" ]'
