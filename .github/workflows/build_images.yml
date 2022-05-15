@@ -15,7 +15,7 @@ jobs:
       max-parallel: 8
       matrix:
         alpine-version: [ edge, latest ]
-        name: [ socat, tor, svn, jq, xmlstarlet, curl]
+        name: [ socat, tor, svn, jq, xmlstarlet, curl ]
         include:
 #          # Example
 #          - name: java # Please add this name to the matrix names list above!
@@ -56,10 +56,21 @@ jobs:
          PACKAGES='${{matrix.name}}'
          [ -z '${{matrix.packages}}' ] || PACKAGES='${{matrix.packages}}'
 
-         # Do the tinyimages magic here
+         # Do the tinyimage magic here
          {
-          [ -z '${{ matrix.entrypoint }}' ] && echo ENTRYPOINT "[ \"/usr/bin/${{matrix.name}}\" ]" || echo ENTRYPOINT '${{ matrix.entrypoint }}'
-          [ -z '${{ matrix.command }}' ] && echo CMD '[ "--help" ]' || echo CMD '${{ matrix.command }}'
+          # Set default entrypoint?
+          if [ -z '${{ matrix.entrypoint }}' ]; then
+           echo ENTRYPOINT "[ \"/usr/bin/${{matrix.name}}\" ]"
+           else echo ENTRYPOINT '${{ matrix.entrypoint }}'
+          fi
+
+          # Set default comand?
+          if [ -z '${{ matrix.command }}' ]; then
+           echo CMD '[ "--help" ]'
+           else echo CMD '${{ matrix.command }}'
+          fi
+
+          # Print custom rest of the Dockerfile
           echo '${{ matrix.dockerfile-bottom }}';
          } >> ./Dockerfile-alpine
 
@@ -90,23 +101,27 @@ jobs:
           context: .
           file: ./Dockerfile-alpine
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          push: true
+          push: false
           tags: ${{ steps.prep.outputs.tag }}
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine-version }}
             PACKAGES=${{ steps.prep.outputs.packages }}
             ADDFILES=${{ matrix.files }}
 
-      - name: Test default arch
+      - name: Test default arch and push
         env:
           COMPOSE_FILE: ./tests/compose-sut.yaml
           IMAGE_NAME: ${{ steps.prep.outputs.tag }}
         run: |
+         set -x
          TEST_LOG="$(mktemp)"
-         docker-compose --verbose --no-ansi up sut | tee "${TEST_LOG}"
-         tail --lines=1 "${TEST_LOG}" | grep '^tests_sut_1 exited with code 0$'
-         rm "${TEST_LOG}"
+         docker-compose --no-ansi up sut | tee "${TEST_LOG}"
          docker-compose down
+         test "$(tail --lines=1 \"${TEST_LOG})\"" -eq 'tests_sut_1 exited with code 0'
+         rm "${TEST_LOG}"
 
          docker run -i "${IMAGE_NAME}"
          podman run -i "${IMAGE_NAME}"
+
+         # OK, do the push
+         docker push "${IMAGE_NAME}"
