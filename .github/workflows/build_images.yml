@@ -15,7 +15,7 @@ jobs:
       max-parallel: 8
       matrix:
         alpine-version: [ edge, latest ]
-        name: [ socat, tor, svn, jq, xmlstarlet ]
+        name: [ socat, tor, svn, jq, xmlstarlet, curl ]
         include:
 
           - name: socat
@@ -46,6 +46,12 @@ jobs:
             packages: xmlstarlet
             dockerfile-bottom: |
              ENTRYPOINT [ "/usr/bin/xmlstarlet" ]
+             CMD [ "--help" ]
+
+          - name: curl
+            packages: curl
+            dockerfile-bottom: |
+             ENTRYPOINT [ "/usr/bin/curl" ]
              CMD [ "--help" ]
 
     steps:
