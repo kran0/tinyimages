@@ -2,6 +2,8 @@
 
 Simple scripts to create very light images usefull for base-images and one-tool-images.
 
+Please watch [usage-example.sh](./usage-example.sh).
+
 # Automated builds
 
 [![Builds][badge_build_status]][link_docker_tags]
