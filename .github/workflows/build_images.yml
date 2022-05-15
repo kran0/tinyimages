@@ -97,9 +97,9 @@ jobs:
       - name: Simple build and run test
         env:
           IMAGE_NAME: test:${{matrix.name}}
-          ALPINE_VERSION=${{ matrix.alpine-version }}
-          PACKAGES=${{ steps.prep.outputs.packages }}
-          ADDFILES=${{ matrix.files }}
+          ALPINE_VERSION: ${{ matrix.alpine-version }}
+          PACKAGES: '${{ steps.prep.outputs.packages }}
+          ADDFILES: ${{ matrix.files }}
         run: |
          set -x
          TEST_LOG="$(mktemp)"
