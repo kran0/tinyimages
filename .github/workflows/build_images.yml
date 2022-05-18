@@ -14,8 +14,8 @@ jobs:
     strategy:
       max-parallel: 8
       matrix:
-        alpine-version: [ edge, latest ]
-        name: [ socat, tor, svn, jq, xmlstarlet, curl ]
+        alpine-version: [ latest, edge ]
+        name: [ socat, tor, svn, jq, xmlstarlet, curl, perl, perl-utils ]
         include:
 #          # Example
 #          - name: java # Please add this name to the matrix names list above!
@@ -35,6 +35,10 @@ jobs:
 
           - name: curl
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+
+          - name: perl-utils
+            packages: perl-utils
+            entrypoint: '[ "/usr/bin/perl" ]'
 
     steps:
       - name: Checkout
