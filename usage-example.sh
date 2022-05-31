@@ -7,7 +7,7 @@ shopt -s expand_aliases
 alias wrap='
 {
  for c in $(cat); do
-  alias ${TOOL_NAME:-${c}}="${CONTAINER_RUN:-podman run -i --rm} docker.io/kran0/tiny:${c}";
+  alias ${TOOL_NAME:-${c}}="${CONTAINER_RUN:-podman run -i --rm} ${CONTAINER_ARGS} docker.io/kran0/tiny:${c}";
  done;
  unset c;
 }<<<'
