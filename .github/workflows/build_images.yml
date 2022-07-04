@@ -37,7 +37,6 @@ jobs:
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
 
           - name: perl-utils
-            packages: perl-utils
             entrypoint: '[ "/usr/bin/perl" ]'
 
     steps:
