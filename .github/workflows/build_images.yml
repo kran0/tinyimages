@@ -27,6 +27,7 @@ jobs:
 #             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
 
           - name: openjdk11-jre
+            alpine-version: edge # TODO: disable this line
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
             entrypoint: '[ "java" ]'
             command: '[ "-version" ]'
@@ -35,6 +36,7 @@ jobs:
              ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk/jre
 
           - name: openjdk17-jre
+            alpine-version: edge # TODO: disable this line
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
             entrypoint: '[ "java" ]'
             command: '[ "-version" ]'
