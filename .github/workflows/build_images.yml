@@ -15,7 +15,7 @@ jobs:
       max-parallel: 8
       matrix:
         alpine-version: [ latest, edge ]
-        name: [ socat, tor, svn, jq, xmlstarlet, curl, perl, perl-utils ]
+        name: [ socat, tor, svn, jq, xmlstarlet, curl, perl, perl-utils, openjdk11-jre, openjdk17-jre ]
         include:
 #          # Example
 #          - name: java # Please add this name to the matrix names list above!
@@ -25,6 +25,22 @@ jobs:
 #            command: '[ "-version" ]'                     # Default: '[ "--help" ]'
 #            dockerfile-bottom: |
 #             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
+
+          - name: openjdk11-jre
+            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+            entrypoint: '[ "java" ]'
+            command: '[ "-version" ]'
+            dockerfile-bottom: |
+             ENV PATH=/usr/lib/jvm/java-11-openjdk/bin
+             ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk/jre
+
+          - name: openjdk17-jre
+            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+            entrypoint: '[ "java" ]'
+            command: '[ "-version" ]'
+            dockerfile-bottom: |
+             ENV PATH=/usr/lib/jvm/java-17-openjdk/bin
+             ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk/jre
 
           - name: socat
             command: '[ "-h" ]'
