@@ -55,7 +55,7 @@ jobs:
          FIRST_PACKAGE=$(cut -f 1 -d ' '<<< ${PACKAGES})
          FIRST_PACKAGE_VERSION=$(podman run -i --rm alpine:${{ matrix.alpine-version }} ash -c "apk update --quiet && apk search --exact ${FIRST_PACKAGE} | sed -ne '1s/'^${FIRST_PACKAGE}-'//p'")
          test '!' -z "${FIRST_PACKAGE_VERSION}"
-         PACKAGES="${FIRST_PACKAGE}=${FIRST_PACKAGE_VERSION} $( sed -e 's/^[^ ]*//' <<<${PACKAGES})"
+         PACKAGES="$(sed -e 's/^[^ ]*/'${FIRST_PACKAGE}=${FIRST_PACKAGE_VERSION}'/' <<<${PACKAGES})"
          # TODO: make it pretty!
 
          # Find out first image TAG
