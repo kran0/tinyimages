@@ -55,7 +55,7 @@ jobs:
 
          # Find out first image TAG
          FIRST_PACKAGE_VERSION=$(podman run -it --rm alpine:${{ matrix.alpine-version }} ash -c "apk update --quiet && apk search --exact ${PACKAGES} | sed -ne '1s/'^${PACKAGES}-'//p'")
-         test -z ${FIRST_PACKAGE_VERSION}
+         test '!' -z ${FIRST_PACKAGE_VERSION}
          TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${FIRST_PACKAGE_VERSION}"
          TEST_TAG=${TAGS}
 
