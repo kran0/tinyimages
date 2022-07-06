@@ -14,7 +14,7 @@ jobs:
     strategy:
       max-parallel: 8
       matrix:
-        alpine-version: [ latest, edge ]
+        alpine-version: [ edge ]
         name: [ socat, tor, svn, jq, xmlstarlet, curl, perl, perl-utils ]
         include:
 #          # Example
@@ -60,10 +60,7 @@ jobs:
          TEST_TAG=${TAGS}
 
          # Calculate additional TAGs
-         case '${{ matrix.alpine-version }}' in
-          'edge') TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-edge" ;;
-          *     ) TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}"      ;;
-         esac
+         TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}"
 
          # Do the tinyimage magic here
          {
