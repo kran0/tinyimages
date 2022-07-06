@@ -66,12 +66,22 @@ jobs:
          TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}"
          if grep '^[0-9]*.[0-9]*.[0-9]*-*' <<< "${FIRST_PACKAGE_VERSION}"
          then
-           VERSION_PATCH=$(cut -f'.' -d 1,2,3 <<< "${FIRST_PACKAGE_VERSION}" )
-           test -z ${VERSION_PATCH} || TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION_PATCH}"
-           VERSION_MINOR=$(cut -f'.' -d 1,2 <<< "${FIRST_PACKAGE_VERSION}" )
-           test -z ${VERSION_MINOR} || TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION_MINOR}"
-           VERSION_MAJOR=$(cut -f'.' -d 1 <<< "${FIRST_PACKAGE_VERSION}" )
-           test -z ${VERSION_MAJOR} || TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION_MAJOR}"
+           # #1 - remove trailing -rN 1.2.3-r0 -> 1.2.3
+           VERSION=$(sed -e 's/-.*$//' <<< "${FIRST_PACKAGE_VERSION}")
+           test -z ${VERSION} && break
+           TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION}"
+
+           # #2 - remove patch version 1.2.3 -> 1.2
+           VERSION=$(cut -d'.' -f 1,2 <<< "${VERSION}")
+           test -z ${VERSION} && break
+           TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION}"
+
+           # #3 - remove minor version 1.2 -> 1
+           VERSION=$(cut -d'.' -f 1 <<< "${VERSION}")
+           test -z ${VERSION} && break
+           TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION}"
+
+           unset VERSION
          fi
 
          # Do the tinyimage magic here
