@@ -49,15 +49,21 @@ jobs:
          set -x
          DOCKER_IMAGE=${{ secrets.DOCKERHUB_USER }}/tiny
 
-         # Calculate Image TAG
-         case '${{ matrix.alpine-version }}' in
-          'edge') TAG="${DOCKER_IMAGE}:${{matrix.name}}-edge" ;;
-          *     ) TAG="${DOCKER_IMAGE}:${{matrix.name}}"      ;;
-         esac
-
          # Calculate packages list
          PACKAGES='${{matrix.name}}'
          [ -z '${{matrix.packages}}' ] || PACKAGES='${{matrix.packages}}'
+
+         # Find out first image TAG
+         FIRST_PACKAGE_VERSION=$(podman run -it --rm alpine:${{ matrix.alpine-version }} ash -c "apk update --quiet && apk search --exact ${PACKAGES} | sed -ne '1s/'^${PACKAGES}-'//p'")
+         test -z ${FIRST_PACKAGE_VERSION}
+         TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${FIRST_PACKAGE_VERSION}"
+         TEST_TAG=${TAGS}
+
+         # Calculate additional TAGs
+         case '${{ matrix.alpine-version }}' in
+          'edge') TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-edge" ;;
+          *     ) TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}"      ;;
+         esac
 
          # Do the tinyimage magic here
          {
@@ -78,7 +84,8 @@ jobs:
          } >> ./Dockerfile-alpine
 
          # Set output parameters.
-         echo ::set-output name=tag::${TAG}
+         echo ::set-output name=tags::${TAGS}
+         echo ::set-output name=test_tag::${TEST_TAG}
          echo ::set-output name=packages::${PACKAGES}
 
       - name: Set up QEMU
@@ -120,7 +127,7 @@ jobs:
           file: ./Dockerfile-alpine
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           push: true
-          tags: ${{ steps.prep.outputs.tag }}
+          tags: ${{ steps.prep.outputs.tags }}
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine-version }}
             PACKAGES=${{ steps.prep.outputs.packages }}
@@ -129,7 +136,7 @@ jobs:
       - name: After push default arch test
         env:
           COMPOSE_FILE: ./tests/compose-sut.yaml
-          IMAGE_NAME: ${{ steps.prep.outputs.tag }}
+          IMAGE_NAME: ${{ steps.prep.outputs.test_tag }}
         run: |
          set -x
          TEST_LOG="$(mktemp)"
