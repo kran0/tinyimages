@@ -4,7 +4,7 @@ FROM alpine:${ALPINE_VERSION} as apkextractor
 ARG PACKAGES=musl
 ARG ADDFILES
 
-ADD apkextractor.sh /
+COPY apkextractor.sh /
 RUN /apkextractor.sh ${PACKAGES}
 
 FROM scratch
