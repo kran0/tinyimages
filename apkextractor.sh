@@ -22,7 +22,7 @@ function getDependsOn {                 #Find full number of depencies
  fi
 
  DEPENDSON=$(apk info -R ${@}\
-             | sed -e '/ depends on:$/d;/^[[:space:]]*$/d'\
+             | sed -e '/ depends on:$/d;/^[[:space:]]*$/d;s/=.*$//'\
              | grep -Fxvf "${SEENFILE}"\
              | tee -a "${SEENFILE}")
 
@@ -48,7 +48,7 @@ function getContains {    # find unique file names containing in given packages
 
 apk add --quiet --update --virtual .apkextractor ${@}
 
-getContains $(getDependsOn ${@} | sort -u)\
+getContains $(getDependsOn .apkextractor | sort -u)\
  | tar vc -C / -T -\
  | tar x -C "${TARGET}"
 
