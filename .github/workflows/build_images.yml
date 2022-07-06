@@ -66,12 +66,16 @@ jobs:
          TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}"
          if grep '^[0-9]*.[0-9]*.[0-9]*-*' <<< "${FIRST_PACKAGE_VERSION}"
          then
-           # #1 - remove trailing -rN 1.2.3-r0 -> 1.2.3
+           # #1 - remove trailing -rN 1.2.3.4-r0 -> 1.2.3.4
            VERSION=$(sed -e 's/-.*$//' <<< "${FIRST_PACKAGE_VERSION}")
+           test -z ${VERSION} && break
+
+           # #2 - leave only patch version 1.2.3.4 -> 1.2.3
+           VERSION=$(cut -d'.' -f 1,2,3 <<< "${VERSION}")
            test -z ${VERSION} && break
            TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION}"
 
-           # #2 - remove patch version 1.2.3 -> 1.2
+           # #3 - remove patch version 1.2.3 -> 1.2
            VERSION=$(cut -d'.' -f 1,2 <<< "${VERSION}")
            test -z ${VERSION} && break
            TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION}"
