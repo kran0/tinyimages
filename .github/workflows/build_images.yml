@@ -87,12 +87,12 @@ jobs:
 
          # Find out main image TAG
          TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${MAIN_PACKAGE_VERSION}"
+         [[ "${MAIN_PACKAGE_VERSION}" =~ -r[0-9]*$ ]] && TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${MAIN_PACKAGE_VERSION%-*}"
          TEST_TAG=${TAGS}
 
          # Calculate additional TAGs
          TAGS="${DOCKER_IMAGE}:${{matrix.name}},${TAGS}"
-
-         # Check if looking like numbered major.minor.patch.etc-rN
+         # Check if looking like numbered major.minor.patch
          if [[ "${MAIN_PACKAGE_VERSION}" =~ ^[0-9]*\.[0-9]*\.[0-9]*.* ]]
          then
            # cut trailing minus sign and everything else after it, wtire to bash array
