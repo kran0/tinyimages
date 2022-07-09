@@ -14,7 +14,8 @@ jobs:
     strategy:
       max-parallel: 8
       matrix:
-        alpine-version: edge
+        alpine-version:
+          - edge
         name:
           - curl
           - grep
