@@ -14,7 +14,18 @@ FROM docker.io/busybox:latest
 COPY --from=tiny / /
 ```
 
-Or combine any number of tools as a single layer
+Multiple tools as many layers:
+
+```
+FROM docker.io/kran0/tiny:curl as curl
+FROM docker.io/kran0/tiny:sed as sed
+
+FROM docker.io/busybox:latest
+COPY --from=curl / /
+COPY --from=sed / /
+```
+
+Multiple tools as a single layer
 
 ```
 FROM docker.io/kran0/tiny:curl as curl
