@@ -21,7 +21,8 @@ jobs:
           - grep
           - jq
           - openjdk8-jre
-          - openjdk11-jre
+#          - openjdk11-jre # TODO add arch seletor per image
+                           # while there is no openjdk11-jre=11.0.15_p10-r1 for linux/386
 #          - openjdk17-jre
           - perl
           - perl-utils
