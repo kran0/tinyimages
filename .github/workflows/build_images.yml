@@ -65,7 +65,7 @@ jobs:
          PACKAGES_LIST[0]="${PACKAGES_LIST[0]}=${MAIN_PACKAGE_VERSION}"
 
          # Convert bash array back to packages list
-         PACKAGES=$(printf '%s ' "${System[*]}" )
+         PACKAGES=$(printf '%s ' "${PACKAGES_LIST[*]}" )
 
          # Find out main image TAG
          TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${MAIN_PACKAGE_VERSION}"
