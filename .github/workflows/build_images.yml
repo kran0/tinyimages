@@ -14,8 +14,18 @@ jobs:
     strategy:
       max-parallel: 8
       matrix:
-        alpine-version: [ edge ]
-        name: [ socat, tor, svn, jq, xmlstarlet, curl, perl, perl-utils ]
+        alpine-version: edge
+        name:
+          - curl
+          - grep
+          - jq
+          - perl
+          - perl-utils
+          - sed
+          - socat
+          - svn
+          - tor
+          - xmlstarlet
         include:
 #          # Example
 #          - name: java # Please add this name to the matrix names list above!
