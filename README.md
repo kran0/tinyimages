@@ -47,10 +47,11 @@ Feel free add more tools by asking me or sending PR's
 | Repository:Tag                  | Description                                                         |
 |:--------------------------------|---------------------------------------------------------------------|
 | docker.io/kran0/tiny:curl       | [Transfer data specified with URL](https://github.com/curl/curl)    |
-| grep                            | [GNU Grep](http://www.gnu.org/software/grep/)                       |
+| docker.io/kran0/tiny:grep       | [GNU Grep](http://www.gnu.org/software/grep/)                       |
 | docker.io/kran0/tiny:jq         | [JSON processor](https://github.com/stedolan/jq)                    |
-| perl, perl-utils                | [Perl](https://www.perl.org/)                                       |
-| sed                             | [GNU Sed](https://www.gnu.org/software/sed/)                        |
+| docker.io/kran0/tiny:openjdk{8,11,17}-jre | All openjdk versions are experimental, please use official ones |
+| docker.io/kran0/tiny:perl       | [Perl](https://www.perl.org/)                                       |
+| docker.io/kran0/tiny:sed        | [GNU Sed](https://www.gnu.org/software/sed/)                        |
 | docker.io/kran0/tiny:socat      | [Multipurpose relay](http://www.dest-unreach.org/socat/)            |
 | docker.io/kran0/tiny:svn        | [Subversion version control client](https://subversion.apache.org/) |
 | docker.io/kran0/tiny:tor        | [The Onion Router](https://github.com/torproject/tor)               |

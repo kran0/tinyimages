@@ -21,6 +21,8 @@ jobs:
           - grep
           - jq
           - openjdk8-jre
+          - openjdk11-jre
+          - openjdk17-jre
           - perl
           - perl-utils
           - sed
@@ -29,14 +31,13 @@ jobs:
           - tor
           - xmlstarlet
         include:
-#          # Example
-#          - name: java # Please add this name to the matrix names list above!
-#            packages: openjdk8-jre ca-certificates-bundle # Default: ${{matrix.name}}
-#            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt' # Add certain files, not packages
-#            entrypoint: '[ "java" ]'                      # Default: '[ "/usr/bin/${{matrix.name}}" ]'
-#            command: '[ "-version" ]'                     # Default: '[ "--help" ]'
-#            dockerfile-bottom: |
-#             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
+
+# All openjdk versions are experimental, please use official ones
+          - name: curl
+            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+
+          - name: grep
+            entrypoint: '[ "/bin/grep" ]'
 
           - name: openjdk8-jre
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
@@ -46,11 +47,16 @@ jobs:
              ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
              ENV PATH=/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
 
-          - name: curl
-            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+          - name: openjdk11-jre
+            entrypoint: '[ "java" ]'
+            command: '[ "-version" ]'
+            dockerfile-bottom: |
+             ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+             ENV PATH=/usr/lib/jvm/java-11-openjdk/bin
 
-          - name: grep
-            entrypoint: '[ "/bin/grep" ]'
+          - name: openjdk17-jre
+            entrypoint: '[ "java" ]'
+            command: '[ "-version" ]'
 
           - name: perl-utils
             entrypoint: '[ "/usr/bin/perl" ]'
