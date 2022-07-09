@@ -78,11 +78,12 @@ jobs:
           "apk update --quiet && apk search --exact ${PACKAGES_LIST[0]} | sed -ne '1s/'^${PACKAGES_LIST[0]}-'//p'")
          test '!' -z "${MAIN_PACKAGE_VERSION}"
 
-         # Replace first element im packages to fix the first package version while build
+         # Replace first element in packages to fix the first package version while build
          PACKAGES_LIST[0]="${PACKAGES_LIST[0]}=${MAIN_PACKAGE_VERSION}"
 
          # Convert bash array back to packages list
          PACKAGES=$(printf '%s ' "${PACKAGES_LIST[*]}" )
+         unset PACKAGES_LIST
 
          # Find out main image TAG
          TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${MAIN_PACKAGE_VERSION}"
@@ -90,23 +91,16 @@ jobs:
 
          # Calculate additional TAGs
          TAGS="${DOCKER_IMAGE}:${{matrix.name}},${TAGS}"
-         if grep '^[0-9]*.[0-9]*.[0-9]*-*' <<< "${MAIN_PACKAGE_VERSION}"
+
+         # Check if looking like numbered major.minor.patch.etc-rN
+         if [[ "${MAIN_PACKAGE_VERSION}" =~ ^[0-9]*\.[0-9]*\.[0-9]*.* ]]
          then
-           # #1 - remove trailing -rN 1.2.3.4-r0 -> 1.2.3.4
-           VERSION=$(sed -e 's/-.*$//' <<< "${MAIN_PACKAGE_VERSION}")
-           test -z ${VERSION} && break
-
-           # #2 - leave only patch version 1.2.3.4 -> 1.2.3
-           VERSION=$(cut -d'.' -f 1,2,3 <<< "${VERSION}")
-           test -z ${VERSION} && break
-           TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION}"
-
-           # #3 - remove patch version 1.2.3 -> 1.2
-           VERSION=$(cut -d'.' -f 1,2 <<< "${VERSION}")
-           test -z ${VERSION} && break
-           TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION}"
-
-           unset VERSION
+           # cut trailing minus sign and everything else after it, wtire to bash array
+           IFS='.' read -r -a VERSION_LIST <<< "${MAIN_PACKAGE_VERSION%-*}"
+           # add version tags
+           TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION_LIST[0]}.${VERSION_LIST[1]}.${VERSION_LIST[2]}"
+           TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}-${VERSION_LIST[0]}.${VERSION_LIST[1]}"
+           unset VERSION_LIST
          fi
 
          # Do the tinyimage magic here
