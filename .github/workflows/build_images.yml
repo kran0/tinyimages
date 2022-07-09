@@ -52,22 +52,31 @@ jobs:
          # Calculate packages list
          PACKAGES='${{matrix.name}}'
          [ -z '${{matrix.packages}}' ] || PACKAGES='${{matrix.packages}}'
-         FIRST_PACKAGE=$(cut -f 1 -d ' '<<< ${PACKAGES})
-         FIRST_PACKAGE_VERSION=$(podman run -i --rm alpine:${{ matrix.alpine-version }} ash -c "apk update --quiet && apk search --exact ${FIRST_PACKAGE} | sed -ne '1s/'^${FIRST_PACKAGE}-'//p'")
-         test '!' -z "${FIRST_PACKAGE_VERSION}"
-         PACKAGES="$(sed -e 's/^[^ ]*/'${FIRST_PACKAGE}=${FIRST_PACKAGE_VERSION}'/' <<<${PACKAGES})"
-         # TODO: make it pretty!
 
-         # Find out first image TAG
-         TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${FIRST_PACKAGE_VERSION}"
+         # Convert packages list to bash array
+         IFS=' ' read -r -a PACKAGES_LIST <<< "${PACKAGES}"
+
+         # get first (main) package version to use it as an image TAG
+         MAIN_PACKAGE_VERSION=$(podman run -i --rm alpine:${{ matrix.alpine-version }} ash -c\
+          "apk update --quiet && apk search --exact ${PACKAGES_LIST[0]} | sed -ne '1s/'^${PACKAGES_LIST[0]}-'//p'")
+         test '!' -z "${MAIN_PACKAGE_VERSION}"
+
+         # Replace first element im packages to fix the first package version while build
+         PACKAGES_LIST[0]="${PACKAGES_LIST[0]}=${MAIN_PACKAGE_VERSION}"
+
+         # Convert bash array back to packages list
+         PACKAGES=$(printf '%s ' "${System[*]}" )
+
+         # Find out main image TAG
+         TAGS="${DOCKER_IMAGE}:${{matrix.name}}-${MAIN_PACKAGE_VERSION}"
          TEST_TAG=${TAGS}
 
          # Calculate additional TAGs
-         TAGS="${TAGS},${DOCKER_IMAGE}:${{matrix.name}}"
-         if grep '^[0-9]*.[0-9]*.[0-9]*-*' <<< "${FIRST_PACKAGE_VERSION}"
+         TAGS="${DOCKER_IMAGE}:${{matrix.name}},${TAGS}"
+         if grep '^[0-9]*.[0-9]*.[0-9]*-*' <<< "${MAIN_PACKAGE_VERSION}"
          then
            # #1 - remove trailing -rN 1.2.3.4-r0 -> 1.2.3.4
-           VERSION=$(sed -e 's/-.*$//' <<< "${FIRST_PACKAGE_VERSION}")
+           VERSION=$(sed -e 's/-.*$//' <<< "${MAIN_PACKAGE_VERSION}")
            test -z ${VERSION} && break
 
            # #2 - leave only patch version 1.2.3.4 -> 1.2.3
