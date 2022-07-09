@@ -41,7 +41,7 @@ jobs:
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
 
           - name: grep
-            entrypoint: '[ "/bin/perl" ]'
+            entrypoint: '[ "/bin/grep" ]'
 
           - name: perl-utils
             entrypoint: '[ "/usr/bin/perl" ]'
