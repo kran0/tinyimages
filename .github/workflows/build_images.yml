@@ -20,6 +20,7 @@ jobs:
           - curl
           - grep
           - jq
+          - openjdk8-jre
           - perl
           - perl-utils
           - sed
@@ -36,6 +37,14 @@ jobs:
 #            command: '[ "-version" ]'                     # Default: '[ "--help" ]'
 #            dockerfile-bottom: |
 #             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
+
+          - name: openjdk8-jre
+            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+            entrypoint: '[ "java" ]'
+            command: '[ "-version" ]'
+            dockerfile-bottom: |
+             ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
+             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
 
           - name: curl
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
