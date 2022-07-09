@@ -37,18 +37,24 @@ jobs:
 #            dockerfile-bottom: |
 #             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/bin
 
+          - name: curl
+            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+
+          - name: grep
+            entrypoint: '[ "/bin/perl" ]'
+
+          - name: perl-utils
+            entrypoint: '[ "/usr/bin/perl" ]'
+
+          - name: sed
+            entrypoint: '[ "/bin/sed" ]'
+
           - name: socat
             command: '[ "-h" ]'
 
           - name: svn
             packages: subversion
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
-
-          - name: curl
-            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
-
-          - name: perl-utils
-            entrypoint: '[ "/usr/bin/perl" ]'
 
     steps:
       - name: Checkout
