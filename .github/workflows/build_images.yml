@@ -22,7 +22,7 @@ jobs:
           - jq
           - openjdk8-jre
           - openjdk11-jre
-          - openjdk17-jre
+#          - openjdk17-jre
           - perl
           - perl-utils
           - sed
@@ -54,9 +54,9 @@ jobs:
              ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk
              ENV PATH=/usr/lib/jvm/java-11-openjdk/bin
 
-          - name: openjdk17-jre
-            entrypoint: '[ "java" ]'
-            command: '[ "-version" ]'
+#          - name: openjdk17-jre
+#            entrypoint: '[ "java" ]'
+#            command: '[ "-version" ]'
 
           - name: perl-utils
             entrypoint: '[ "/usr/bin/perl" ]'
