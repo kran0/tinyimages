@@ -47,6 +47,7 @@ jobs:
             entrypoint: '[ "/bin/grep" ]'
 
           - name: dropbear
+            entrypoint: '[ "/usr/sbin/dropbear" ]'
             command: '[ "-V" ]'
 
           - name: openjdk8-jre
@@ -71,6 +72,9 @@ jobs:
           - name: openssh-server
             entrypoint: '[ "ssh-keygen" ]'
             command: '[ "-A" ]'
+            dockerfile-bottom: |
+             RUN umask 0137 && echo 'root:*::0:::::' > /etc/shadow\
+              && umask 0133 && echo 'root:x:0:0:root:/root:/bin/ash' > /etc/passwd
 
           - name: perl-utils
             entrypoint: '[ "/usr/bin/perl" ]'
