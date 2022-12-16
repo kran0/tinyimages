@@ -70,11 +70,12 @@ jobs:
 #            command: '[ "-version" ]'
 
           - name: openssh-server
+            packages: openssh-server busybox-binsh
             entrypoint: '[ "ssh-keygen" ]'
             command: '[ "-A" ]'
             dockerfile-bottom: |
              RUN umask 0137 && echo 'root:*::0:::::' > /etc/shadow\
-              && umask 0133 && echo 'root:x:0:0:root:/root:/bin/ash' > /etc/passwd
+              && umask 0133 && echo 'root:x:0:0:root:/root:/bin/sh' > /etc/passwd
 
           - name: perl-utils
             entrypoint: '[ "/usr/bin/perl" ]'
