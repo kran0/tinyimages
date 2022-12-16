@@ -19,6 +19,7 @@ jobs:
         name:
           - bc
           - curl
+          - dropbear
           - grep
           - less
           - jq
@@ -26,6 +27,7 @@ jobs:
 #          - openjdk11-jre # TODO add arch seletor per image
                            # while there is no openjdk11-jre=11.0.15_p10-r1 for linux/386
 #          - openjdk17-jre
+          - openssh-server
           - patch
           - perl
           - perl-utils
@@ -43,6 +45,9 @@ jobs:
 
           - name: grep
             entrypoint: '[ "/bin/grep" ]'
+
+          - name: dropbear
+            command: '[ "-V" ]'
 
           - name: openjdk8-jre
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
@@ -62,6 +67,10 @@ jobs:
 #          - name: openjdk17-jre
 #            entrypoint: '[ "java" ]'
 #            command: '[ "-version" ]'
+
+          - name: openssh-server
+            entrypoint: '[ "ssh-keygen" ]'
+            command: '[ "-A" ]'
 
           - name: perl-utils
             entrypoint: '[ "/usr/bin/perl" ]'
