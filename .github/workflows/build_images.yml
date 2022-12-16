@@ -71,8 +71,8 @@ jobs:
 
           - name: openssh-server
             packages: openssh-server busybox-binsh
-            entrypoint: '[ "ssh-keygen" ]'
-            command: '[ "-A" ]'
+            entrypoint: '[ ]'
+            command: '[ "ssh-keygen", "-A" ]'
             dockerfile-bottom: |
              RUN umask 0137 && echo 'root:*::0:::::' > /etc/shadow\
               && umask 0133 && echo 'root:x:0:0:root:/root:/bin/sh' > /etc/passwd
