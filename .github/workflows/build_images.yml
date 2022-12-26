@@ -47,6 +47,7 @@ jobs:
             entrypoint: '[ "/bin/grep" ]'
 
           - name: dropbear
+            packages: dropbear busybox-binsh
             entrypoint: '[ "/usr/sbin/dropbear" ]'
             command: '[ "-V" ]'
 
