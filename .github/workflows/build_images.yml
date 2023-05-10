@@ -19,9 +19,11 @@ jobs:
         name:
           - bc
           - curl
+          - dropbear-pure
           - dropbear
           - grep
           - less
+          - iptables
           - jq
           - nmap
           - openjdk8-jre
@@ -47,10 +49,18 @@ jobs:
           - name: grep
             entrypoint: '[ "/bin/grep" ]'
 
+          - name: dropbear-pure # TO use with the busybox
+            packages: dropbear
+            entrypoint: '[ "/usr/sbin/dropbear" ]'
+            command: '[ "-V" ]'
+
           - name: dropbear
             packages: dropbear busybox-binsh
             entrypoint: '[ "/usr/sbin/dropbear" ]'
             command: '[ "-V" ]'
+
+          - name: iptables
+            entrypoint: '[ "/sbin/iptables" ]'
 
           - name: openjdk8-jre
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
