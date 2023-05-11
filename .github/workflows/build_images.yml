@@ -104,7 +104,7 @@ jobs:
             packages: dropbear busybox-binsh gcompat
             entrypoint: '[ "/bin/busybox" ]'
             dockerfile-bottom: |
-             VOLUME /target/etc/dropbear
+             VOLUME /etc/dropbear
 
     steps:
       - name: Checkout
