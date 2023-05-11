@@ -103,6 +103,8 @@ jobs:
           - name: vipnetclient-dropbear # Ready for installing Vipnet Client with dropbear
             packages: dropbear busybox-binsh gcompat
             entrypoint: '[ "/bin/busybox" ]'
+            dockerfile-bottom: |
+             RUN mkdir -vp /target/etc/dropbear
 
     steps:
       - name: Checkout
