@@ -18,6 +18,7 @@ jobs:
           - edge
         name:
           - bc
+          - busybox-binsh-libc6-compat
           - curl
           - dropbear-pure
           - dropbear
@@ -42,7 +43,10 @@ jobs:
           - xmlstarlet
         include:
 
-# All openjdk versions are experimental, please use official ones
+          - name: busybox-binsh-libc6-compat
+            packages: busybox-binsh libc6-compat
+            entrypoint: '[ "/bin/sh" ]'
+
           - name: curl
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
 
@@ -62,6 +66,7 @@ jobs:
           - name: iptables
             entrypoint: '[ "/sbin/iptables" ]'
 
+# All openjdk versions are experimental, please use official ones
           - name: openjdk8-jre
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
             entrypoint: '[ "java" ]'
