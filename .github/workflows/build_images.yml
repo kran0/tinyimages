@@ -18,9 +18,7 @@ jobs:
           - edge
         name:
           - bc
-          - busybox-binsh-libc6-compat
           - curl
-          - dropbear-pure
           - dropbear
           - grep
           - less
@@ -35,28 +33,20 @@ jobs:
           - patch
           - perl
           - perl-utils
-          - screen
+#          - screen
           - sed
           - socat
           - svn
           - tor
+          - vipnetclient-dropbear
           - xmlstarlet
         include:
-
-          - name: busybox-binsh-libc6-compat
-            packages: busybox-binsh libc6-compat
-            entrypoint: '[ "/bin/sh" ]'
 
           - name: curl
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
 
           - name: grep
             entrypoint: '[ "/bin/grep" ]'
-
-          - name: dropbear-pure # TO use with the busybox
-            packages: dropbear
-            entrypoint: '[ "/usr/sbin/dropbear" ]'
-            command: '[ "-V" ]'
 
           - name: dropbear
             packages: dropbear busybox-binsh
@@ -109,6 +99,10 @@ jobs:
           - name: svn
             packages: subversion
             files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+
+          - name: vipnetclient-dropbear # Ready for installing Vipnet Client with dropbear
+            packages: dropbear busybox-binsh gcompat
+            entrypoint: '[ "/bin/busybox" ]'
 
     steps:
       - name: Checkout
