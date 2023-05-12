@@ -19,7 +19,6 @@ jobs:
         name:
           - bc
           - curl
-          - dropbear-pure
           - dropbear
           - grep
           - less
@@ -50,11 +49,6 @@ jobs:
 
           - name: dropbear
             packages: dropbear busybox-binsh
-            entrypoint: '[ "/usr/sbin/dropbear" ]'
-            command: '[ "-V" ]'
-
-          - name: dropbear-pure
-            packages: dropbear
             entrypoint: '[ "/usr/sbin/dropbear" ]'
             command: '[ "-V" ]'
 
