@@ -13,9 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 8
+      fail-fast: false
       matrix:
         alpine-version:
-          - latest
+          - edge
         name:
           - bc
           - curl
