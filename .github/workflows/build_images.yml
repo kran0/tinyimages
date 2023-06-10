@@ -89,8 +89,8 @@ jobs:
                             && echo 'sshd:x:22:22:sshd:/dev/null:/sbin/nologin' >> /etc/passwd
 
           - name: perl-utils
-            packages: busybox-binsh perl perl-utils build-base perl-dev perl-doc
-            entrypoint: '[ "/bin/sh" ]'
+            packages: perl perl-utils build-base perl-dev perl-doc
+            entrypoint: '[ "/usr/bin/perl" ]'
 
           - name: rtorrent
             command: '[ "-h" ]'
