@@ -91,6 +91,9 @@ jobs:
           - name: perl-utils
             entrypoint: '[ "/usr/bin/perl" ]'
 
+          - name: rtorrent
+            command: '[ "-h" ]'
+
           - name: sed
             entrypoint: '[ "/bin/sed" ]'
 
