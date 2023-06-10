@@ -27,8 +27,8 @@ jobs:
           - jq
           - nmap
           - openjdk8-jre
-          - openjdk11-jre # TODO add arch seletor per image
-          - openjdk17-jre
+#          - openjdk11-jre # TODO add arch seletor per image
+#          - openjdk17-jre
           - openssh-server
           - patch
           - perl
