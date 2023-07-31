@@ -172,9 +172,9 @@ jobs:
          } >> ./Dockerfile-alpine
 
          # Set output parameters.
-         echo ::set-output name=tags::${TAGS}
-         echo ::set-output name=test_tag::${TEST_TAG}
-         echo ::set-output name=packages::${PACKAGES}
+         echo "tags=${TAGS}" >> $GITHUB_OUTPUT
+         echo "test_tag=${TEST_TAG}" >> $GITHUB_OUTPUT
+         echo "packages=${PACKAGES}" >> $GITHUB_OUTPUT
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
