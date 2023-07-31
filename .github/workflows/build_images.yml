@@ -25,6 +25,7 @@ jobs:
           - less
           - iptables
           - jq
+          - lftp
           - nmap
           - openjdk8-jre
 #          - openjdk11-jre # TODO add arch seletor per image
