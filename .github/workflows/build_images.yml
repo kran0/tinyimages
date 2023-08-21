@@ -38,6 +38,7 @@ jobs:
           - screen
           - sed
           - cmatrix
+          - sensors
           - socat
           - svn
           - tor
@@ -98,6 +99,9 @@ jobs:
 
           - name: sed
             entrypoint: '[ "/bin/sed" ]'
+
+          - name: sensors
+            packages: lm-sensors
 
           - name: socat
             command: '[ "-h" ]'
