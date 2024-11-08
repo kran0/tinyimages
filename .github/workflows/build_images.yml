@@ -27,7 +27,7 @@ jobs:
           - jq
           - lftp
           - nmap
-          - openjdk8-jre
+#          - openjdk8-jre
 #          - openjdk11-jre # TODO add arch seletor per image
 #          - openjdk17-jre
           - openssh-server
@@ -57,7 +57,7 @@ jobs:
             command: '[ "-V" ]'
 
           - name: iptables
-            entrypoint: '[ "/sbin/iptables" ]'
+            entrypoint: '[ "/usr/sbin/iptables" ]'
 
 # All openjdk versions are experimental, please use official ones
           - name: openjdk8-jre
