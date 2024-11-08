@@ -206,7 +206,7 @@ jobs:
         run: |
          set -x
          TEST_LOG="$(mktemp)"
-         docker compose --no-ansi up --build sut | tee "${TEST_LOG}"
+         docker compose up --build sut | tee "${TEST_LOG}"
          docker compose down
          tail --lines=1 ${TEST_LOG} | grep 'sut-1 exited with code 0'
          rm "${TEST_LOG}"
@@ -232,7 +232,7 @@ jobs:
         run: |
          set -x
          TEST_LOG="$(mktemp)"
-         docker compose --no-ansi up sut | tee "${TEST_LOG}"
+         docker compose up sut | tee "${TEST_LOG}"
          docker compose down
          tail --lines=1 ${TEST_LOG} | grep 'sut-1 exited with code 0'
          rm "${TEST_LOG}"
