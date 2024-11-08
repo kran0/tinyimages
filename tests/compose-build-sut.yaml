@@ -2,7 +2,6 @@
 # Pass if build returns 0
 # Fail if build non-zero
 
-version: '2'
 services:
   sut:
     build:
