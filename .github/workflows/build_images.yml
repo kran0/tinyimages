@@ -208,7 +208,7 @@ jobs:
          TEST_LOG="$(mktemp)"
          docker compose --no-ansi up --build sut | tee "${TEST_LOG}"
          docker compose down
-         test "$(tail --lines=1 ${TEST_LOG})" '==' 'sut-1 exited with code 0'
+         tail --lines=1 ${TEST_LOG}) | grep 'sut-1 exited with code 0'
          rm "${TEST_LOG}"
 
       - name: Build
@@ -234,7 +234,7 @@ jobs:
          TEST_LOG="$(mktemp)"
          docker compose --no-ansi up sut | tee "${TEST_LOG}"
          docker compose down
-         test "$(tail --lines=1 ${TEST_LOG})" '==' 'sut-1 exited with code 0'
+         tail --lines=1 ${TEST_LOG}) | grep 'sut-1 exited with code 0'
          rm "${TEST_LOG}"
          docker run -i "${IMAGE_NAME}"
          podman run -i "${IMAGE_NAME}"
