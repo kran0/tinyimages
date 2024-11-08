@@ -234,12 +234,7 @@ jobs:
          TEST_LOG="$(mktemp)"
          docker compose --no-ansi up sut | tee "${TEST_LOG}"
          docker compose down
-<<<<<<< HEAD
          test "$(tail --lines=1 ${TEST_LOG})" '==' 'sut-1 exited with code 0'
-=======
-         test "$(tail --lines=1 ${TEST_LOG})" '==' 'tests_sut_1 exited with code 0'
->>>>>>> 1d56c73f965450b9353a0050fd11b758fc23ddb0
          rm "${TEST_LOG}"
-
          docker run -i "${IMAGE_NAME}"
          podman run -i "${IMAGE_NAME}"
