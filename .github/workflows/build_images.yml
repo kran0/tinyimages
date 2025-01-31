@@ -60,13 +60,13 @@ jobs:
             entrypoint: '[ "/usr/sbin/iptables" ]'
 
 # All openjdk versions are experimental, please use official ones
-          - name: openjdk8-jre
-            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
-            entrypoint: '[ "java" ]'
-            command: '[ "-version" ]'
-            dockerfile-bottom: |
-             ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
-             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+#          - name: openjdk8-jre
+#            files: 'etc/ssl/cert.pem etc/ssl/certs/ca-certificates.crt'
+#            entrypoint: '[ "java" ]'
+#            command: '[ "-version" ]'
+#            dockerfile-bottom: |
+#             ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
+#             ENV PATH=/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
 
 #          - name: openjdk11-jre
 #            entrypoint: '[ "java" ]'
